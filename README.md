@@ -6,6 +6,6 @@ london drugs photolab fun :-)
 require 'mechanize'
 require 'pp'
 mechanize = Mechanize.new
-photos_page = mechannize.get 'https://photolab.londondrugs.com/prints?coll=mVnr3ZX2GN3v1K46YLzyJxjo'
+photos_page = mechanize.get 'https://photolab.londondrugs.com/prints?coll=mVnr3ZX2GN3v1K46YLzyJxjo'
 pp photos_page
 ```
