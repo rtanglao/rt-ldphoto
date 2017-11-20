@@ -15,8 +15,8 @@ b.element(:xpath, "/html/body/div[2]/div[2]/div/prints/div/div/div/prints-photos
 num_photos = 37
 done = false
 urls = []
+url_count = 0
 Watir::Wait.until(timeout: 180) {
-  urls = []
   $stderr.printf("LENGTH:%d\n", b.images.length)  ;
   current_length = b.images.length
   b.scroll.to :top
@@ -29,13 +29,14 @@ Watir::Wait.until(timeout: 180) {
       last_photo = i
       i.wait_until_present.click
       b.scroll.to :bottom
-      $stderr.printf("VALID URL:%s\n", src)
-      urls.push(src)
+      $stderr.printf("VALID URL:%s, count:%d\n", src, url_count + 1) if !urls.include?(src)
+      url_count += 1 if !urls.include?(src)
+      urls.push(src) if !urls.include?(src)
     end
   end;
   $stderr.printf("last photo:%s\n", last_photo.src);
   last_photo.scroll.to :top ;
-  if current_length >= num_photos
+  if urls.length == num_photos
     $stderr.puts("EXITING")
     done = true
   end;
