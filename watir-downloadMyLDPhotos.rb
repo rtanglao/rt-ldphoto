@@ -12,7 +12,9 @@ b.element(:xpath => '/html/body/div[2]/div[2]/div/prints/div/div/div/prints-phot
 b.element(:xpath, "/html/body/div[2]/div[2]/div/prints/div/div/div/prints-photos/div/div/div[1]/div[2]/div[2]/photos-view/div/div[1]/photos-toolbar/div/div[1]/div/ul/li[2]/div[2]/span").wait_until_present.click
 b.element(:xpath => '/html/body/div[2]/div[2]/div/prints/div/div/div/prints-photos/div/div/div[1]/div[2]/div[2]/photos-view/div/div[1]/photos-toolbar/div/div[1]/div/button').wait_until_present.click
 b.element(:xpath, "/html/body/div[2]/div[2]/div/prints/div/div/div/prints-photos/div/div/div[1]/div[2]/div[2]/photos-view/div/div[1]/photos-toolbar/div/div[1]/div/ul/li[1]/div[2]/span").wait_until_present.click
-num_photos = 37
+num = b.element(xpath: "/html/body/div[2]/div[2]/div/prints/div/div/div/prints-photos/div/div/div[1]/div[1]/collections-view/div/div[1]/div[1]/div[3]/ul/li[2]/div/div[2]/div[1]")
+num_photos =  num.text.to_i
+$stderr.printf("num_photos:%d\n", num_photos)
 done = false
 urls = []
 url_count = 0
@@ -29,6 +31,7 @@ Watir::Wait.until(timeout: 180) {
       last_photo = i
       i.wait_until_present.click
       b.scroll.to :bottom
+      b.scroll.to :top
       $stderr.printf("VALID URL:%s, count:%d\n", src, url_count + 1) if !urls.include?(src)
       url_count += 1 if !urls.include?(src)
       urls.push(src) if !urls.include?(src)
