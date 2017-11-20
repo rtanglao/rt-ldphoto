@@ -12,9 +12,13 @@ b.element(:xpath => '/html/body/div[2]/div[2]/div/prints/div/div/div/prints-phot
 b.element(:xpath, "/html/body/div[2]/div[2]/div/prints/div/div/div/prints-photos/div/div/div[1]/div[2]/div[2]/photos-view/div/div[1]/photos-toolbar/div/div[1]/div/ul/li[2]/div[2]/span").wait_until_present.click
 b.element(:xpath => '/html/body/div[2]/div[2]/div/prints/div/div/div/prints-photos/div/div/div[1]/div[2]/div[2]/photos-view/div/div[1]/photos-toolbar/div/div[1]/div/button').wait_until_present.click
 b.element(:xpath, "/html/body/div[2]/div[2]/div/prints/div/div/div/prints-photos/div/div/div[1]/div[2]/div[2]/photos-view/div/div[1]/photos-toolbar/div/div[1]/div/ul/li[1]/div[2]/span").wait_until_present.click
-
+num_photos = 37
+done = false
+urls = []
 Watir::Wait.until(timeout: 180) {
+  urls = []
   $stderr.printf("LENGTH:%d\n", b.images.length)  ;
+  current_length = b.images.length
   b.scroll.to :top
   b.scroll.to :bottom
   last_photo = nil;
@@ -24,14 +28,20 @@ Watir::Wait.until(timeout: 180) {
     if src.include?("storage.photofinale")
       last_photo = i
       i.wait_until_present.click
-      b.scroll.to :center
+      b.scroll.to :bottom
+      $stderr.printf("VALID URL:%s\n", src)
+      urls.push(src)
     end
   end;
   $stderr.printf("last photo:%s\n", last_photo.src);
   last_photo.scroll.to :top ;
-  b.images.length > 22 }
-b.images.each do |i|
-  src = i.src
+  if current_length >= num_photos
+    $stderr.puts("EXITING")
+    done = true
+  end;
+  done }
+urls.each do |src|
+  $stderr.puts(src)
   if src.include?("storage.photofinale")
     #pp src
     original_url = src.gsub("&size=240", "&size=0")
