@@ -45,7 +45,8 @@ def fetch_1_at_a_time(urls)
     end
   end
 end
-url = "https://photolab.londondrugs.com/prints?coll=mVnr3ZX2GN3v1K46YLzyJxjo"
+url = ARGV[0]
+
 b = Watir::Browser.start url ,  :firefox #, headless: true
 num_path = "/html/body/div[2]/div[2]/div/prints/div/div/div/prints-photos/div/div/div[1]/div[1]/collections-view/div/div[1]/div[1]/div[3]/ul/li[2]/div/div[2]/div[1]" 
 num = b.element(xpath: num_path).wait_until_present
