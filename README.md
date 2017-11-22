@@ -1,5 +1,14 @@
 # rt-ldphoto
 london drugs photolab fun :-)
+## 21November2017 - working version with watir
+
+* on 22november, add url as a command line parameter!
+```sh
+./click-sidebar-ldphotos.rb
+```
+
+
+
 ## 19November2017 a script to download photos
 * 1\. see what we got :-)
 ```ruby
