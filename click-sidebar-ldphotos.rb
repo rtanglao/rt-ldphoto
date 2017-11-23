@@ -3,6 +3,10 @@ require 'rubygems'
 require 'watir'
 require 'pp'
 require 'curb'
+require 'rack'
+
+url = ARGV[0]
+$photoset_name = ARGV[1]
 
 def fetch_1_at_a_time(urls)
   
@@ -16,7 +20,9 @@ def fetch_1_at_a_time(urls)
     
     easy.url = url
     uri = URI.parse(url)
-    filename = sprintf("ldphoto-%2.2d.jpg", i)
+    params = Rack::Utils.parse_query URI(url).query
+    filename = sprintf("%s-ldphoto-%3.3d-%s.jpg", $photoset_name, i, 
+                       params["photo"])
     $stderr.print "filename:'#{filename}'"
     $stderr.print "url:'#{url}' :"
     if File.exist?(filename)
@@ -45,7 +51,6 @@ def fetch_1_at_a_time(urls)
     end
   end
 end
-url = ARGV[0]
 
 b = Watir::Browser.start url ,  :firefox #, headless: true
 num_path = "/html/body/div[2]/div[2]/div/prints/div/div/div/prints-photos/div/div/div[1]/div[1]/collections-view/div/div[1]/div[1]/div[3]/ul/li[2]/div/div[2]/div[1]" 
