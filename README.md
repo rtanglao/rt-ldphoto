@@ -1,5 +1,12 @@
 # rt-ldphoto
 london drugs photolab fun :-)
+
+## 19October2018 setup geckodriver
+```bash
+cd /Users/rtanglao/Dropbox/Photos/3RD_SUNDAY/21OCTOBER2018
+export PATH=/Users/rtanglao/Dropbox/GIT/rt-ldphoto:$PATH
+/Users/rtanglao/Dropbox/GIT/rt-ldphoto/click-sidebar-ldphotos.rb https://photolab.londondrugs.com/prints?coll=Z23yvwjDp6RDOLDbpOo1LM4B 21october2018-3rdsunday
+```
 ## 21November2017 - working version with watir
 
 * on 22november, add url as a command line parameter!
